@@ -1,60 +1,22 @@
 import matplotlib.pyplot as plt
 
-def analyze():
-    
-    val = []
-    t = []
-    RR = []
-    V = []
-    i = 0
-    end_score = []
-    num_of_samples = 0
+def open_data_file():
+    time_tab = []
+    rr_tab = []
+    flag_tab = []
     file = open("RR.rea", 'r')
-    while True:
-        val.append(file.readline())
-        if val[i] == '':
-            break
-        num_of_samples += 1
-        i += 1
-        
-    file.close()
 
-    for j in range(1, i):
-        x = 0
-        ch = '0'
-        t.append('')
-        RR.append('')
-        V.append('')
-        while ord(ch) >= ord('0') and ord(ch) <= ord('9') or ch == '.':
-            ch = val[j][x]
-            t[j - 1] += ch
-            x += 1
+    for line in file.readlines():
+        line = line.strip().split()
+        time_tab.append(float(line[0]))
+        rr_tab.append(float(line[1]))
+        flag_tab.append(int(line[2])) #int or bool it's just a flag
 
-        while not(ord(ch) >= ord('0') and ord(ch) <= ord('9') or ch == '.'):
-            ch = val[j][x]
-            x += 1
-        x -= 1
-        while ord(ch) >= ord('0') and ord(ch) <= ord('9') or ch == '.':
-            ch = val[j][x]
-            RR[j - 1] += ch
-            x += 1
 
-        while not(ord(ch) >= ord('0') and ord(ch) <= ord('9') or ch == '.'):
-            ch = val[j][x]
-            x += 1
-        x -= 1
-        while ord(ch) >= ord('0') and ord(ch) <= ord('9') or ch == '.':
-            ch = val[j][x]
-            V[j - 1] += ch
-            x += 1
-
-        if V[j - 1] == '0\n':
-            end_score.append((t[j - 1].strip(), RR[j - 1].strip()))
-
-        returning_value = []
-        returning_value.append(end_score)
-        returning_value.append(t)
-        returning_value.append(RR)
+    returning_value = []
+    returning_value.append(end_score)
+    returning_value.append(t)
+    returning_value.append(RR)
     return returning_value
 
 def count_average(our_tuple):
@@ -138,15 +100,16 @@ def get_data_from_user(tuple_with_end):
     maximal_value = float(input("Give max time value (in minutes)... "))
     bin_val = float(input("Give binning interval... "))
     sma = int(input("Give length of sma... "))
-    if maximal_value == -1:
-        maximal_value = find_max(tuple_with_end)
+    maximum_tab_value = find_max(tuple_with_end)
+    if maximal_value == -1 or maximal_value > maximum_tab_value:
+        maximal_value = maximum_tab_value
     returning_value.append(minimal_value)
     returning_value.append(maximal_value)
     returning_value.append(bin_val)
     returning_value.append(sma)
     return returning_value
 
-tup_gen = analyze()
+tup_gen = open_data_file()
 tuple_with_end_score = tup_gen[0]
 time_lineup = []
 RR_lineup = []
