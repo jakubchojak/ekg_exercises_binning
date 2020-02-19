@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 
 def analyze():
+    
     val = []
     t = []
     RR = []
