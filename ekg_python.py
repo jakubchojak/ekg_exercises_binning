@@ -1,4 +1,4 @@
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 def open_data_file():
     '''returns dictionary with time_tab as float tab ['time'], rr_tab
@@ -95,6 +95,8 @@ def set_range(dict_with_data, min_minutes, max_minutes, binning_interval = 0.0, 
         returning_value['bin_value_range'] = binning(time_lineup, rr_lineup, binning_interval)
     if sma_length > 0:
         returning_value['sma_val_range'] = sma_algorithm(time_lineup, rr_lineup, sma_length)
+    returning_value['time_lineup'] = time_lineup
+    returning_value['rr_lineup'] = rr_lineup
     return returning_value
 
 def get_data_from_user(dict_with_data):
@@ -112,6 +114,10 @@ def get_data_from_user(dict_with_data):
     returning_value['sma'] = sma
     return returning_value
 
+def plotting(time_lineup, rr_lineup):
+    plt.plot(time_lineup, rr_lineup)
+    plt.show()
+
 def start():
     file_data = open_data_file()
     user_input = get_data_from_user(file_data)
@@ -119,6 +125,7 @@ def start():
     print(count_average(file_data))
     print(find_max(file_data))
     print(find_min(file_data))
+    plotting(range_to_count['time_lineup'], range_to_count['rr_lineup'])
 
 start()
 '''
