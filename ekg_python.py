@@ -125,7 +125,7 @@ def start():
     print(count_average(file_data))
     print(find_max(file_data))
     print(find_min(file_data))
-    plotting(range_to_count['time_lineup'], range_to_count['rr_lineup'])
+    plotting(range_to_count['time_lineup'], range_to_count['rr_lineup']) #first default (without binning or sma)
 
 start()
 '''
