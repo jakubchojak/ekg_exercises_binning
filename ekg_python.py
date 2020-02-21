@@ -93,8 +93,18 @@ def set_range(dict_with_data, min_minutes, max_minutes, binning_interval = 0.0, 
         i += 1
     if binning_interval > 0.0:
         returning_value['bin_value_range'] = binning(time_lineup, rr_lineup, binning_interval)
+        returning_value['bin_time'] = []
+        returning_value['bin_rr'] = []
+        for j in range(len(returning_value['bin_value_range'])):
+            returning_value['bin_time'].append(returning_value['bin_value_range'][j][0])
+            returning_value['bin_rr'].append(returning_value['bin_value_range'][j][1])
     if sma_length > 0:
         returning_value['sma_val_range'] = sma_algorithm(time_lineup, rr_lineup, sma_length)
+        returning_value['sma_time'] = []
+        returning_value['sma_rr'] = []
+        for j in range(len(returning_value['sma_val_range'])):
+            returning_value['sma_time'].append(returning_value['sma_val_range'][j][0])
+            returning_value['sma_rr'].append(returning_value['sma_val_range'][j][1])
     returning_value['time_lineup'] = time_lineup
     returning_value['rr_lineup'] = rr_lineup
     return returning_value
@@ -126,29 +136,7 @@ def start():
     print(find_max(file_data))
     print(find_min(file_data))
     plotting(range_to_count['time_lineup'], range_to_count['rr_lineup']) #first default (without binning or sma)
+    plotting(range_to_count['bin_time'], range_to_count['bin_rr'])
+    plotting(range_to_count['sma_time'], range_to_count['sma_rr'])
 
 start()
-'''
-plt.plot(time_lineup, RR_lineup)
-plt.show()
-
-
-time_next = []
-RR_next = []
-
-for i in range(len(next_show[0])):
-    time_next.append(next_show[0][i][0])
-    RR_next.append(next_show[0][i][1])
-
-plt.plot(time_next, RR_next)
-plt.show()
-RR_next = []
-time_next = []
-
-for i in range(len(next_show[1])):
-    time_next.append(next_show[1][i][0])
-    RR_next.append(next_show[1][i][1])
-
-plt.plot(time_next, RR_next)
-plt.show()
-'''
